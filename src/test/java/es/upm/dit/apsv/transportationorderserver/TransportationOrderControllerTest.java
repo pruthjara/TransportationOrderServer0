@@ -55,34 +55,32 @@ public class TransportationOrderControllerTest {
 
     @Test
     public void testGetOrder() throws Exception {
-        // 1. Configuramos el mock del repositorio para un ID concreto
+   
         when(repository.findById("8962ZKR")).thenReturn(Optional.of(
             new TransportationOrder("28","8962ZKR",1591682400000L,
               40.4562191,-3.8707211,1591692196000L,42.0206372,-4.5330132,
               0,0.0,0.0,0)));
 
-        // 2. Construimos la petición GET. Ajusta la URL según tu controlador
+
         RequestBuilder request = MockMvcRequestBuilders
                 .get("/transportationorders/8962ZKR")
                 .accept(MediaType.APPLICATION_JSON);
 
-        // 3. Comprobamos que devuelve 200 OK
+
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-                // aquí podrías añadir más comprobaciones con jsonPath
+             
     }
 
     @Test
     public void testGetOrder_NotFound() throws Exception {
-        // 1. El repositorio devuelve vacío cuando el ID no existe
+
         when(repository.findById("NO_EXISTE")).thenReturn(Optional.empty());
 
-        // 2. Petición GET a un ID que no está
         RequestBuilder request = MockMvcRequestBuilders
                 .get("/transportationorders/NO_EXISTE")
                 .accept(MediaType.APPLICATION_JSON);
 
-        // 3. Esperamos un 404 Not Found (o lo que devuelva tu controlador)
         mockMvc.perform(request)
                 .andExpect(status().isNotFound());
     }
